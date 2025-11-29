@@ -307,11 +307,30 @@ If your Coder host doesn't have GPU access, this template is best for:
 
 ## License
 
-This template is provided as-is for use with Coder. Individual tools have their own licenses:
-- Antigravity: Google Terms of Service
-- Android Studio: Apache 2.0 / IntelliJ Platform License
-- Blender: GPL v3
-- Google Cloud SDK: Google Terms of Service
+**This template (MIT License):**
+This repository contains configuration files and installation scripts licensed under MIT License. You may freely use, modify, and distribute these configuration files.
+
+**Software installed by this template:**
+This template downloads and installs third-party software, each with its own license:
+
+- **Android Studio**: Apache 2.0 / IntelliJ Platform License
+- **Android SDK**: Android Software Development Kit License Agreement (requires acceptance)
+- **Blender**: GPL v3
+- **Google Cloud SDK**: Google Terms of Service
+- **Genkit/Firebase**: Apache 2.0
+- **Google Antigravity**: Verify licensing before use
+
+**Important Disclaimers:**
+1. This template downloads software from official sources; we do not redistribute binaries
+2. Users must accept individual software licenses during installation
+3. This is an unofficial community template, not endorsed by Google, Coder, or other vendors
+4. Trademarks belong to their respective owners
+5. Verify you have rights to use all software in your jurisdiction/organization
+
+**By using this template, you agree to:**
+- Accept licenses for all software it installs
+- Verify compliance with your organization's policies
+- Use software only in accordance with their respective licenses
 
 ## Version History
 
