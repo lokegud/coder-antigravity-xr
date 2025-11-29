@@ -1,6 +1,18 @@
 # Antigravity XR Development Workspace Template
 
+> ⚠️ **GPU Required**: This template requires GPU passthrough for Android emulator and Blender 3D work. Without GPU, use for code editing + physical device development only.
+
 A comprehensive Coder template for Android XR development with Google Antigravity IDE, Android Studio, and the complete Google Cloud AI stack.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Coder](https://img.shields.io/badge/Coder-Template-5F4B8B)](https://coder.com)
+[![Android XR](https://img.shields.io/badge/Android-XR%20SDK-3DDC84)](https://developers.google.com/ar/develop/xr)
+
+**Best For:**
+- Teams with GPU-enabled cloud infrastructure
+- Physical Android XR device development (no emulator)
+- Standardizing XR development environments
+- Remote collaboration on XR projects
 
 ## What's Included
 
