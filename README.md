@@ -332,6 +332,12 @@ This template downloads and installs third-party software, each with its own lic
 - Verify compliance with your organization's policies
 - Use software only in accordance with their respective licenses
 
+## Credits
+
+Created by **[@lokegud](https://github.com/lokegud)**
+
+Built with assistance from Claude (Anthropic) - because even developers need a coding buddy.
+
 ## Version History
 
 - **v1.0.0** - Initial release with Antigravity 1.11.9, Android XR SDK, full Google Cloud AI stack
