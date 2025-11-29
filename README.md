@@ -32,13 +32,32 @@ A comprehensive Coder template for Android XR development with Google Antigravit
 
 - Coder server (self-hosted or Coder Cloud)
 - Docker runtime on Coder host
-- GPU acceleration for emulator (optional but highly recommended)
-- Realistic resource requirements:
-  - **Light editing only**: 4 CPU cores, 8 GB RAM, 50 GB disk
-  - **Active development**: 8 CPU cores, 16 GB RAM, 100 GB disk
-  - **Full XR workflow**: 12+ CPU cores, 24+ GB RAM, 200 GB disk
+- **GPU/VRAM access** - CRITICAL limitation:
+  - Without GPU: Emulator won't work or will be unusably slow
+  - Without GPU: Blender 3D work will be extremely limited
+  - **Recommended**: GPU passthrough to Docker or physical device testing via ADB
 
-**Note**: 2 cores / 4 GB options exist for template testing but are NOT recommended for actual development. The Android emulator alone can consume 3-6 GB RAM.
+### Resource Requirements
+
+| Use Case | CPU | RAM | Disk | GPU | Notes |
+|----------|-----|-----|------|-----|-------|
+| **Code editing only** | 4 cores | 8 GB | 50 GB | None | No emulator/Blender |
+| **Physical device dev** | 8 cores | 16 GB | 100 GB | None | Use ADB to real hardware |
+| **Full emulator + 3D** | 12+ cores | 24+ GB | 200 GB | **Required** | GPU passthrough needed |
+
+**Without GPU Access:**
+- ✅ Antigravity IDE, Android Studio, code editing
+- ✅ Building and compiling Android apps
+- ✅ ADB to physical Android XR devices
+- ❌ Android emulator (won't work or unusably slow)
+- ❌ Blender 3D modeling (software rendering only, very slow)
+- ⚠️ XR development requires physical XR hardware for testing
+
+**With GPU Access:**
+- ✅ Everything above
+- ✅ Hardware-accelerated Android emulator
+- ✅ Blender with GPU rendering
+- ✅ Complete XR development workflow
 
 ## Usage
 
@@ -80,7 +99,27 @@ Once your workspace starts, you can access:
 
 ## Getting Started with Android XR
 
-### 1. Set Up Android XR Emulator
+### GPU-Less Development Workflow (Recommended for Most)
+
+**Without GPU, develop on physical hardware:**
+
+```bash
+# 1. Connect physical Android XR device via USB
+adb devices
+
+# 2. Enable developer mode on device
+# (Settings > About > Tap Build Number 7 times)
+
+# 3. Deploy and test directly
+./gradlew installDebug
+adb logcat
+
+# 4. Use scrcpy for screen mirroring (optional)
+snap install scrcpy
+scrcpy
+```
+
+### With GPU: Set Up Android XR Emulator
 
 ```bash
 # List available system images
@@ -89,8 +128,11 @@ sdkmanager --list | grep xr
 # Create an XR AVD (Android Virtual Device)
 avdmanager create avd -n xr_device -k "system-images;android-34;google-xr;x86_64"
 
-# Launch the emulator
+# Launch the emulator (requires GPU)
 emulator -avd xr_device
+
+# If slow, check GPU acceleration
+emulator -avd xr_device -verbose
 ```
 
 ### 2. Create Your First XR Project
@@ -219,10 +261,30 @@ Add installation commands to `build/Dockerfile` before the final `CMD` instructi
 | XR + 3D editing workflow | 12 cores | 24 GB | 200 GB | Blender + emulator + IDE |
 | Multiple emulators + builds | 16 cores | 32 GB | 200 GB | Heavy parallel development |
 
-**GPU Requirements:**
-- Android Emulator needs GPU acceleration (KVM on Linux, HAXM on Windows/Mac)
-- Blender 3D work benefits from dedicated GPU
-- Without GPU: Emulator will be painfully slow or won't work
+**GPU Requirements (CRITICAL):**
+- **Android Emulator**: Requires GPU acceleration (KVM + GPU on Linux)
+  - Without GPU: Use physical Android XR device via ADB instead
+  - Software emulation is 10-100x slower, essentially unusable for XR
+- **Blender 3D**: Requires GPU for any serious 3D work
+  - Without GPU: Limited to very basic modeling, no real-time rendering
+  - Software rendering takes minutes instead of seconds
+- **XR Development**: Physical XR hardware strongly recommended regardless
+  - Emulators can't fully replicate XR sensors and tracking
+  - Budget for actual XR device (e.g., Meta Quest, Magic Leap, etc.)
+
+**Docker GPU Passthrough Setup:**
+```bash
+# For NVIDIA GPUs with nvidia-docker2
+docker run --gpus all -it antigravity-xr-workspace
+
+# Verify GPU access in container
+nvidia-smi
+```
+
+If your Coder host doesn't have GPU access, this template is best for:
+1. **Code editing and builds** (no emulator)
+2. **Physical device development** (ADB to real hardware)
+3. **Backend/logic development** (no UI/3D work)
 
 ## Support
 
